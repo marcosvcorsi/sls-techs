@@ -1,0 +1,43 @@
+service: techs-service
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  environment:
+    TECHS_TABLE_NAME: ${self:custom.TechsTable.name}
+  iamRoleStatements:
+    - ${file(iam/TechsTableIAM.yml):TechsTableIAM}
+
+resources:
+  Resources:
+    TechsTable: ${file(resources/TechsTable.yml):TechsTable}
+
+functions:
+  createTech:
+    handler: src/handlers/createTech.handler
+    events:
+      - http:
+          method: POST
+          path: /techs
+          cors: true
+  
+  findTechs:
+    handler: src/handlers/findTechs.handler
+    events:
+      - http:
+          method: GET
+          path: /techs
+          cors: true
+
+custom:
+  TechsTable:
+    name: !Ref TechsTable
+    arn: !GetAtt TechsTable.Arn 
