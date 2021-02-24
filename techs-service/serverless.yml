@@ -28,6 +28,14 @@ functions:
           method: POST
           path: /techs
           cors: true
+
+  deleteTech:
+    handler: src/handlers/deleteTech.handler
+    events:
+      - http:
+          method: DELETE
+          path: /techs/{id}
+          cors: true        
   
   findTechs:
     handler: src/handlers/findTechs.handler
@@ -41,3 +49,9 @@ custom:
   TechsTable:
     name: !Ref TechsTable
     arn: !GetAtt TechsTable.Arn 
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - tests/**
+    - jest.config.ts  
