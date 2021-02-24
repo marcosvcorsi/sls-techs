@@ -3,9 +3,10 @@ import { v4 as uuid } from 'uuid';
 import { CreateTechDto } from "../dtos/CreateTechDto";
 import { Tech } from '../models/Tech';
 import { ICreateTechRepository } from "./protocols/ICreateTechRepository";
+import { IDeleteTechRepository } from './protocols/IDeleteTechRepository';
 import { IFindTechsRepository } from './protocols/IFindTechsRepository';
 
-export class TechRepository implements ICreateTechRepository, IFindTechsRepository {
+export class TechRepository implements ICreateTechRepository, IFindTechsRepository, IDeleteTechRepository {
   private dynamoDb: AWS.DynamoDB.DocumentClient;
   private tableName: string;
   
@@ -36,5 +37,12 @@ export class TechRepository implements ICreateTechRepository, IFindTechsReposito
     }).promise();
 
     return Items as Tech[];
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.dynamoDb.delete({
+      TableName: this.tableName,
+      Key: { id }
+    }).promise();
   }
 }

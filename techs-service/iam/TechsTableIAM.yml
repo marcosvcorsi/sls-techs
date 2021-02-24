@@ -3,5 +3,6 @@ TechsTableIAM:
   Action:
     - dynamodb:PutItem
     - dynamodb:Scan
+    - dynamodb:DeleteItem
   Resource:
     - ${self:custom.TechsTable.arn}
