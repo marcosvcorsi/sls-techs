@@ -4,5 +4,6 @@ TechsTableIAM:
     - dynamodb:PutItem
     - dynamodb:Scan
     - dynamodb:DeleteItem
+    - dynamodb:GetItem
   Resource:
     - ${self:custom.TechsTable.arn}

@@ -44,6 +44,14 @@ functions:
           method: GET
           path: /techs
           cors: true
+          
+  getTech:
+    handler: src/handlers/getTech.handler
+    events:
+      - http:
+          method: GET
+          path: /techs/{id}
+          cors: true        
 
 custom:
   TechsTable:

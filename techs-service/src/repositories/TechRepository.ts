@@ -4,9 +4,10 @@ import { CreateTechDto } from "../dtos/CreateTechDto";
 import { Tech } from '../models/Tech';
 import { ICreateTechRepository } from "./protocols/ICreateTechRepository";
 import { IDeleteTechRepository } from './protocols/IDeleteTechRepository';
+import { IFindTechByIdRepository } from './protocols/IFindTechByIdRepository';
 import { IFindTechsRepository } from './protocols/IFindTechsRepository';
 
-export class TechRepository implements ICreateTechRepository, IFindTechsRepository, IDeleteTechRepository {
+export class TechRepository implements ICreateTechRepository, IFindTechsRepository, IDeleteTechRepository, IFindTechByIdRepository {
   private dynamoDb: AWS.DynamoDB.DocumentClient;
   private tableName: string;
   
@@ -44,5 +45,14 @@ export class TechRepository implements ICreateTechRepository, IFindTechsReposito
       TableName: this.tableName,
       Key: { id }
     }).promise();
+  }
+
+  async findById(id: string): Promise<Tech> {
+    const { Item } = await this.dynamoDb.get({
+      TableName: this.tableName,
+      Key: { id }
+    }).promise();
+
+    return Item as Tech;
   }
 }
