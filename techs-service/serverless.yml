@@ -51,7 +51,15 @@ functions:
       - http:
           method: GET
           path: /techs/{id}
-          cors: true        
+          cors: true
+
+  updateTech:
+    handler: src/handlers/updateTech.handler
+    events:
+      - http:
+          method: PUT
+          path: /techs/{id}
+          cors: true                   
 
 custom:
   TechsTable:
