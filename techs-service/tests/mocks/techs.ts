@@ -1,6 +1,9 @@
 import { Tech } from "../../src/models/Tech";
 import { IFindTechsRepository } from "../../src/repositories/protocols/IFindTechsRepository";
 import { ICreateTechRepository } from "../../src/repositories/protocols/ICreateTechRepository";
+import { IFindTechByIdRepository } from "../../src/repositories/protocols/IFindTechByIdRepository";
+import { IDeleteTechRepository } from "../../src/repositories/protocols/IDeleteTechRepository";
+
 
 export const mockCreateTechDto = () => ({
   name: 'anytech'
@@ -23,6 +26,16 @@ export const mockFindTechsRepository = () => {
   return new FindTechsRepositoryStub();
 }
 
+export const mockFindTechByIdRepository = () => {
+  class FindTechByIdRepositoryStub implements IFindTechByIdRepository {
+    async findById(id: string): Promise<Tech> {
+      return Promise.resolve(mockTechModel());
+    }
+  }
+
+  return new FindTechByIdRepositoryStub();
+}
+
 export const mockCreateTechRepository = () => {
   class CreateTechRepositoryStub implements ICreateTechRepository {
     async create(): Promise<Tech> {
@@ -31,4 +44,14 @@ export const mockCreateTechRepository = () => {
   }
 
   return new CreateTechRepositoryStub();
+}
+
+export const mockDeleteTechRepository = () => {
+  class DeleteTechRepositoryStub implements IDeleteTechRepository {
+    async delete(id: string): Promise<void> {
+      return Promise.resolve();
+    }
+  }
+
+  return new DeleteTechRepositoryStub();
 }
