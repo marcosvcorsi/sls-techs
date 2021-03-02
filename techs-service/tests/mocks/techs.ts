@@ -3,6 +3,7 @@ import { IFindTechsRepository } from "../../src/repositories/protocols/IFindTech
 import { ICreateTechRepository } from "../../src/repositories/protocols/ICreateTechRepository";
 import { IFindTechByIdRepository } from "../../src/repositories/protocols/IFindTechByIdRepository";
 import { IDeleteTechRepository } from "../../src/repositories/protocols/IDeleteTechRepository";
+import { IUpdateTechRepository } from "../../src/repositories/protocols/IUpdateTechRepository";
 
 
 export const mockCreateTechDto = () => ({
@@ -54,4 +55,14 @@ export const mockDeleteTechRepository = () => {
   }
 
   return new DeleteTechRepositoryStub();
+}
+
+export const mockUpdateTechRepository = () => {
+  class UpdateTechRepositoryStub implements IUpdateTechRepository {
+    async update(id: string, data: Partial<Tech>): Promise<void> {
+      return Promise.resolve();
+    }
+  } 
+
+  return new UpdateTechRepositoryStub();
 }
