@@ -5,7 +5,7 @@ import { internalServerError, missingParamsError, noContent, notFound, ok } from
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   const { id } = event.pathParameters || {};
-  const { name } = JSON.parse(event.body || '');
+  const { name } = JSON.parse(event.body || '{}');
 
   if(!name) {
     return missingParamsError(['name']);

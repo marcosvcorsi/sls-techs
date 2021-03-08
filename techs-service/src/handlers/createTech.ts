@@ -3,7 +3,7 @@ import { makeCreateTechService } from '../factories/techs';
 import { created, internalServerError, missingParamsError } from '../utils/http';
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
-  const { name } = JSON.parse(event.body || '');
+  const { name } = JSON.parse(event.body || '{}');
 
   if(!name) {
     return missingParamsError(['name']);
