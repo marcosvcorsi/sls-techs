@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest --passWithNoTests --runInBand",
-    "test:cov": "jest --coverage"
+    "test": "jest --passWithNoTests --runInBand --silent --noStackTrace",
+    "test:debug": "jest --passWithNoTests --runInBand",
+    "test:cov": "yarn test --coverage"
   },
   "dependencies": {
     "aws-lambda": "^1.0.6",
