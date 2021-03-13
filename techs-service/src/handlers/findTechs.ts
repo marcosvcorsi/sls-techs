@@ -1,6 +1,7 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { makeFindTechsService } from '../factories/techs';
-import { ok, internalServerError } from '../utils/http';
+import { handleError } from '../helpers/errorHandler';
+import { ok } from '../utils/http';
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
@@ -10,7 +11,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     return ok(techs);
   } catch(error) {
-    console.error(error);
-    return internalServerError();
+    return handleError(error);
   }
 }
