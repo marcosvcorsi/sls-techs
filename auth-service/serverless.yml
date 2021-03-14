@@ -11,6 +11,14 @@ provider:
   lambdaHashingVersion: 20201221
   stage: ${opt:stage, 'dev'}
   region: us-east-1
+  environment:
+    USERS_TABLE_NAME: ${self:custom.UsersTable.name}
+  iamRoleStatements:
+    - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
+
+resources:
+  Resources:
+    UsersTable: ${file(resources/UsersTable.yml):UsersTable}
 
 functions:
   createUser:
@@ -20,3 +28,14 @@ functions:
           method: POST
           path: /users
           cors: true
+
+custom:
+  UsersTable:
+    name: !Ref UsersTable
+    arn: !GetAtt UsersTable.Arn 
+
+package:
+  excludeDevDependencies: true
+  exclude:
+    - tests/**
+    - jest.config.ts  

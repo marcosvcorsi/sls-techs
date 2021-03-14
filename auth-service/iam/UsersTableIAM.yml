@@ -1,0 +1,8 @@
+UsersTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:PutItem
+    - dynamodb:Query
+  Resource:
+    - ${self:custom.UsersTable.arn}
+    - !Join ['/', [ '${self:custom.UsersTable.arn}', 'index', 'email' ]]
