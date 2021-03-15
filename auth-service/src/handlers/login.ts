@@ -1,30 +1,29 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import { makeCreateUserService } from '../factories/user';
+import { makeLoginService } from '../factories/user';
 import { handleError } from '../helpers/errorHandler';
 import { validateParams } from '../helpers/validation';
-import { created, missingParamsError } from '../utils/http';
+import { missingParamsError, ok } from '../utils/http';
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   const body = JSON.parse(event.body || '{}');
 
-  const { hasErrors, errors } = validateParams(['name', 'email', 'password'], body);
+  const { hasErrors, errors } = validateParams(['email', 'password'], body);
 
   if(hasErrors) {
     return missingParamsError(errors);
   }
 
   try {
-    const { name, email, password } = body;
+    const { email, password } = body;
 
-    const createUserService = makeCreateUserService();
+    const loginService = makeLoginService();
 
-    const user = await createUserService.execute({
-      name,
+    const token = await loginService.execute({
       email,
       password
     })
 
-    return created(user);
+    return ok({ token });
   } catch(error) {
     return handleError(error);
   }

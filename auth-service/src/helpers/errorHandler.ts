@@ -1,9 +1,18 @@
-import { EmailInUseError } from "../errors/EmailInUserError";
-import { badRequest, internalServerError } from "../utils/http";
+import { CustomError } from "../errors/CustomError";
+import { badRequest, internalServerError, unauthorized, UNAUTHORIZED } from "../utils/http";
+
+const BAD_REQUEST = 400
 
 export function handleError(error: Error) {
-  if(error instanceof EmailInUseError) {
-    return badRequest(error.message);
+  if(error instanceof CustomError) {
+    const customError = error as CustomError;
+
+    switch(customError.statusCode) {
+      case UNAUTHORIZED:
+        return unauthorized(error.message);
+      default:
+        return badRequest(error.message);
+    }   
   }
 
   console.error(error);

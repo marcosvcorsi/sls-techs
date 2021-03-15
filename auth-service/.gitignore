@@ -5,3 +5,5 @@ coverage
 
 # Serverless directories
 .serverless
+
+*.pem

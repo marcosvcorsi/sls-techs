@@ -1,7 +1,8 @@
-import { genSalt, hash } from 'bcryptjs';
+import { genSalt, hash, compare as bCompare } from 'bcryptjs';
+import { IHashComparer } from '../protocols/IHashComparer';
 import { IHashGenerator } from "../protocols/IHashGenerator";
 
-export class BcryptAdapter implements IHashGenerator {
+export class BcryptAdapter implements IHashGenerator, IHashComparer {
   
   constructor(private readonly rounds: number = 10) {}
 
@@ -11,5 +12,11 @@ export class BcryptAdapter implements IHashGenerator {
     const hashedValue = await hash(value, salt);
 
     return hashedValue;
+  }
+
+  async compare(value: string, hash: string): Promise<boolean> {
+    const match = await bCompare(value, hash);
+
+    return match;
   }
 }

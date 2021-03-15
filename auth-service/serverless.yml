@@ -13,6 +13,7 @@ provider:
   region: us-east-1
   environment:
     USERS_TABLE_NAME: ${self:custom.UsersTable.name}
+    JWT_PRIVATE_KEY: ${file(private-key.pem)}
   iamRoleStatements:
     - ${file(iam/UsersTableIAM.yml):UsersTableIAM}
 
@@ -28,6 +29,14 @@ functions:
           method: POST
           path: /users
           cors: true
+  
+  login:
+    handler: src/handlers/login.handler
+    events:
+      - http:
+          method: POST
+          path: /login
+          cors: true        
 
 custom:
   UsersTable:

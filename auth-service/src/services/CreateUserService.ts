@@ -1,5 +1,5 @@
 import { CreateUserDto } from "../dtos/CreateUserDto";
-import { EmailInUseError } from "../errors/EmailInUserError";
+import { CustomError } from "../errors/CustomError";
 import { User } from "../models/User";
 import { IService } from "../protocols/IService";
 import { IHashGenerator } from "../providers/protocols/IHashGenerator";
@@ -19,7 +19,7 @@ export class CreateUserService implements IService<CreateUserDto, User> {
     const findUserByEmail = await this.findUserByEmailRepository.findByEmail(email);
 
     if(findUserByEmail) {
-      throw new EmailInUseError('E-mail is register to another user');
+      throw new CustomError('E-mail is register to another user');
     }
 
     const hashedPassword = await this.hashGenerator.generate(password);
