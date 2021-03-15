@@ -28,6 +28,7 @@ functions:
           method: POST
           path: /techs
           cors: true
+          authorizer: ${self:custom.authorizer}
 
   deleteTech:
     handler: src/handlers/deleteTech.handler
@@ -35,8 +36,9 @@ functions:
       - http:
           method: DELETE
           path: /techs/{id}
-          cors: true        
-  
+          cors: true
+          authorizer: ${self:custom.authorizer}
+
   findTechs:
     handler: src/handlers/findTechs.handler
     events:
@@ -44,7 +46,8 @@ functions:
           method: GET
           path: /techs
           cors: true
-          
+          authorizer: ${self:custom.authorizer}
+
   getTech:
     handler: src/handlers/getTech.handler
     events:
@@ -52,6 +55,7 @@ functions:
           method: GET
           path: /techs/{id}
           cors: true
+          authorizer: ${self:custom.authorizer}
 
   updateTech:
     handler: src/handlers/updateTech.handler
@@ -59,15 +63,17 @@ functions:
       - http:
           method: PUT
           path: /techs/{id}
-          cors: true                   
+          cors: true
+          authorizer: ${self:custom.authorizer}
 
 custom:
+  authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
   TechsTable:
     name: !Ref TechsTable
-    arn: !GetAtt TechsTable.Arn 
+    arn: !GetAtt TechsTable.Arn
 
 package:
   excludeDevDependencies: true
   exclude:
     - tests/**
-    - jest.config.ts  
+    - jest.config.ts
