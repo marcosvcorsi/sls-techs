@@ -17,9 +17,6 @@ export class LoginService implements IService<LoginDto, string> {
 
     const user = await this.findUserByEmailRepository.findByEmail(email);
   
-    console.log('user', user);
-    console.log(await this.hashComparer.compare(password, user.password))
-
     if(!user || !(await this.hashComparer.compare(password, user.password))) {
       throw new CustomError('E-mail or password is incorrect', UNAUTHORIZED);
     }

@@ -1,6 +1,7 @@
 import { BcryptAdapter } from "../providers/bcrypt/BcryptAdapter";
 import { JwtAdapter } from "../providers/jwt/JwtAdapter";
 import { DynamoDbUsersRepository } from "../repositories/dynamo/DynamoDbUsersRepository";
+import { AuthService } from "../services/AuthService";
 import { CreateUserService } from "../services/CreateUserService";
 import { LoginService } from "../services/LoginService";
 
@@ -32,4 +33,12 @@ export const makeLoginService = (): LoginService => {
   );
 
   return loginService;
+}
+
+export const makeAuthService = (): AuthService => {
+  const jwtAdapter = new JwtAdapter(process.env.JWT_PRIVATE_KEY);
+
+  const authService = new AuthService(jwtAdapter);
+
+  return authService;
 }

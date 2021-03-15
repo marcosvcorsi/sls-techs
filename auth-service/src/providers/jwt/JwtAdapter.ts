@@ -1,6 +1,7 @@
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
+import { ITokenDecoder } from '../protocols/ITokenDecoder';
 
-export class JwtAdapter implements ITokenGenerator {
+export class JwtAdapter implements ITokenGenerator, ITokenDecoder {
   constructor(
     private readonly secret: string
   ) {}
@@ -12,5 +13,13 @@ export class JwtAdapter implements ITokenGenerator {
     });
 
     return token;
+  }
+
+  async decode(token: string): Promise<any> {
+    const decoded = await verify(token, this.secret, {
+      algorithms: ['RS256']
+    });
+
+    return decoded;
   }
 }
