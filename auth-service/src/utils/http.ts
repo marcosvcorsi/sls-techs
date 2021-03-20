@@ -30,6 +30,6 @@ export const badRequest = (message: string) => httpResponse({ message }, BAD_REQ
 
 export const unauthorized = (message: string) => httpResponse({ message }, UNAUTHORIZED);
 
-export const internalServerError = () => httpResponse({ message: 'Oopss, somenthing is wrong!'}, INTERNAL_SERVER_ERROR)
+export const internalServerError = () => httpResponse({ message: 'Oopss, something is wrong!'}, INTERNAL_SERVER_ERROR)
 
 export const missingParamsError = ( params: string[]) => httpResponse({ message: `Missing params: ${params.join(',')}`}, BAD_REQUEST);
