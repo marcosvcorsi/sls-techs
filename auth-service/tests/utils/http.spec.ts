@@ -47,11 +47,29 @@ describe('Http Utils Tests', () => {
   })
 
   it('should return 500 INTERNAL SERVER ERROR', () => {
-    const expectedResponse = { message: 'Oopss, somenthing is wrong!'};
+    const expectedResponse = { message: 'Oopss, something is wrong!'};
 
     const response = http.internalServerError();
 
     expect(response.statusCode).toBe(500);
+    expect(response.body).toEqual(JSON.stringify(expectedResponse));
+  })
+
+  it('should return 400 BAD REQUEST', () => {
+    const expectedResponse = { message: 'Invalid request'};
+
+    const response = http.badRequest('Invalid request');
+
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toEqual(JSON.stringify(expectedResponse));
+  })
+
+  it('should return 401 UNAUTHORIZED', () => {
+    const expectedResponse = { message: 'User unauthorized'};
+
+    const response = http.unauthorized('User unauthorized');
+
+    expect(response.statusCode).toBe(401);
     expect(response.body).toEqual(JSON.stringify(expectedResponse));
   })
 
