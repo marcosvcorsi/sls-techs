@@ -2,6 +2,7 @@ import { LoginDto } from "../dtos/LoginDto";
 import { CustomError } from "../errors/CustomError";
 import { IService } from "../protocols/IService";
 import { IHashComparer } from "../providers/protocols/IHashComparer";
+import { ITokenGenerator } from "../providers/protocols/ITokenGenerator";
 import { IFindUserByEmailRepository } from "../repositories/protocols/IFindUserByEmailRepository";
 import { UNAUTHORIZED } from "../utils/http";
 
