@@ -40,6 +40,7 @@ export const handler: APIGatewayTokenAuthorizerHandler = async (event, context) 
       context: decoded
     };
   } catch(error) {
+    console.error(error);
     throw 'Unauthorized';
   }
 }
