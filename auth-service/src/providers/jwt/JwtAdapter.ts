@@ -1,5 +1,6 @@
 import { sign, verify } from 'jsonwebtoken';
 import { ITokenDecoder } from '../protocols/ITokenDecoder';
+import { ITokenGenerator } from '../protocols/ITokenGenerator';
 
 export class JwtAdapter implements ITokenGenerator, ITokenDecoder {
   constructor(
